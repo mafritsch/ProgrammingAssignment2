@@ -8,28 +8,35 @@
 ## makeCacheMatrix takes a matrix as argument. It creates variables
 ## to store the data and the inverse in its closure. It provides
 ## getter and setter functions to access the data inside the object.
-## It returns a list with the access functions which stores the 
+## It returns a list with the access functions which stores the
 ## data in its environment.
 
 makeCacheMatrix <- function(x = matrix()) {
     inverse <- NULL
+    ## Sets a new value for the matrix and sets the inverse to NULL
     setmatrix <- function(m) {
         x <<- m
         inverse <<- NULL
     }
-    getmatrix <- function() x
-    setinverse <- function(inv) inverse <<- inv
-    getinverse <- function() inverse
-    list(set = setmatrix, get = getmatrix,
-         setinverse = setinverse,
-         getinverse = getinverse)
+    getmatrix <- function()
+        x
+    setinverse <- function(inv)
+        inverse <<- inv
+    getinverse <- function()
+        inverse
+    ##Returns a list with the getter and setter functions
+    list(
+        set = setmatrix, get = getmatrix,
+        setinverse = setinverse,
+        getinverse = getinverse
+    )
 }
 
 
 ## Cachesolve takes a list created with makeCacheMatrix as an argument.
-## It checks if makeCacheMatrix already contains the inverse of the 
-## contained matrix. If the inverse exists it is returned. Otherwise, 
-## the inverse is calculated, set in the object made by makeCacheMatrix 
+## It checks if makeCacheMatrix already contains the inverse of the
+## contained matrix. If the inverse exists it is returned. Otherwise,
+## the inverse is calculated, set in the object made by makeCacheMatrix
 ## and the inverse is returned.
 
 cacheSolve <- function(x, ...) {
@@ -40,7 +47,7 @@ cacheSolve <- function(x, ...) {
         message("getting cached data")
         return(inverse)
     }
-    ## Take the matrix data and calculate the invers
+    ## Take the matrix data and calculate the inverse
     data <- x$get()
     inverse <- solve(data)
     ## Set the inverse to the cache for further usage
